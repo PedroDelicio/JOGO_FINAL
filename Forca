@@ -1,0 +1,53 @@
+import random
+
+def escolher_palavra():
+    palavras = ["estudo", "programa", "desenvolvimento", "berssa", "tecnologia", "futebol"]
+    return random.choice(palavras)
+
+def mostrar_palavra_oculta(palavra, letras_corretas):
+    resultado = ""
+    for letra in palavra:
+        if letra in letras_corretas:
+            resultado += letra + " "
+        else:
+            resultado += "_ "
+    return resultado.strip()
+
+def jogar_forca():
+    palavra_secreta = escolher_palavra()
+    letras_corretas = []
+    tentativas = 6
+
+    print("Bem-vindo ao Jogo da Forca!")
+    print(mostrar_palavra_oculta(palavra_secreta, letras_corretas))
+
+    while tentativas > 0:
+        palpite = input("Digite uma letra: ").lower()
+
+        if len(palpite) != 1 or not palpite.isalpha():
+            print("Por favor, digite uma única letra válida.")
+            continue
+
+        if palpite in letras_corretas:
+            print("Você já tentou essa letra. Tente outra.")
+            continue
+
+        if palpite in palavra_secreta:
+            letras_corretas.append(palpite)
+            print("Letra correta!")
+        else:
+            tentativas -= 1
+            print("Letra incorreta. Tentativas restantes:", tentativas)
+
+        palavra_oculta = mostrar_palavra_oculta(palavra_secreta, letras_corretas)
+        print(palavra_oculta)
+
+        if "_" not in palavra_oculta:
+            print("Parabéns! Você venceu!")
+            break
+
+    if tentativas == 0:
+        print("Você perdeu. A palavra correta era:", palavra_secreta)
+
+if __name__ == "__main__":
+    jogar_forca()
