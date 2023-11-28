@@ -1,9 +1,15 @@
-import random
+import random #Esta linha importa o módulo random, que é utilizado para gerar números aleatórios. Neste caso, será usado para escolher uma palavra aleatória da lista.
 
+
+
+# Função para escolher uma palavra aleatória da lista
 def escolher_palavra():
-    palavras = ["estudo", "programa", "desenvolvimento", "berssa", "tecnologia", "futebol"]
-    return random.choice(palavras)
+    palavras = ["estudo", "programa", "desenvolvimento", "calabreso", "tecnologia", "futebol"]
+    return random.choice(palavras) # Aqui, definimos uma função chamada escolher_palavra() que retorna uma palavra aleatória da lista palavras usando random.choice.
 
+
+
+# Função para mostrar a palavra oculta, substituindo letras não reveladas por underscores
 def mostrar_palavra_oculta(palavra, letras_corretas):
     resultado = ""
     for letra in palavra:
@@ -11,43 +17,62 @@ def mostrar_palavra_oculta(palavra, letras_corretas):
             resultado += letra + " "
         else:
             resultado += "_ "
-    return resultado.strip()
+    return resultado.strip() #Aqui, definimos uma função chamada escolher_palavra() que retorna uma palavra aleatória da lista palavras usando random.choice.
 
+
+
+# Função principal do jogo da forca
 def jogar_forca():
+    # Escolhe uma palavra aleatória
     palavra_secreta = escolher_palavra()
+    # Lista para armazenar letras corretas já reveladas
     letras_corretas = []
-    tentativas = 6
+    # Número de tentativas permitidas
+    tentativas = 6 #Aqui, começamos a função principal jogar_forca(). Uma palavra secreta é escolhida aleatoriamente, uma lista vazia de letras corretas é criada e o número de tentativas é inicializado em 6. A mensagem de boas-vindas e a palavra oculta são exibidas.
 
+
+
+    # Mensagem de boas-vindas
     print("Bem-vindo ao Jogo da Forca!")
+    # Exibe a palavra oculta inicialmente
     print(mostrar_palavra_oculta(palavra_secreta, letras_corretas))
 
+    # Loop principal do jogo
     while tentativas > 0:
+        # Solicita ao jogador que digite uma letra
         palpite = input("Digite uma letra: ").lower()
 
+        # Verifica se o palpite é válido (uma única letra)
         if len(palpite) != 1 or not palpite.isalpha():
             print("Por favor, digite uma única letra válida.")
-            continue
+            continue #Neste trecho, um loop while é usado para solicitar repetidamente ao jogador que digite uma letra. Se o palpite não for uma única letra alfabética, uma mensagem é exibida, e o loop continua com a palavra-chave continue.
 
+        # Verifica se o jogador já tentou essa letra antes
         if palpite in letras_corretas:
             print("Você já tentou essa letra. Tente outra.")
-            continue
+            continue #Aqui, é verificado se o jogador já tentou a letra antes. Se sim, uma mensagem é exibida, e o loop continua
 
+        # Verifica se o palpite está na palavra secreta
         if palpite in palavra_secreta:
             letras_corretas.append(palpite)
             print("Letra correta!")
         else:
             tentativas -= 1
-            print("Letra incorreta. Tentativas restantes:", tentativas)
+            print("Letra incorreta. Tentativas restantes:", tentativas) #Se o palpite estiver na palavra secreta, a letra é adicionada à lista de letras corretas, e uma mensagem é exibida. Caso contrário, o número de tentativas é reduzido, e uma mensagem informa que a letra é incorreta.
 
+        # Exibe a palavra oculta atualizada
         palavra_oculta = mostrar_palavra_oculta(palavra_secreta, letras_corretas)
-        print(palavra_oculta)
+        print(palavra_oculta) #A palavra oculta é atualizada e exibida após cada palpite
 
+        # Verifica se todas as letras foram reveladas
         if "_" not in palavra_oculta:
             print("Parabéns! Você venceu!")
-            break
+            break #erifica se não há mais underscores na palavra oculta. Se não houver, o jogador venceu e o loop é interrompido com a palavra-chave break.
 
+    # Se o jogador esgotar as tentativas
     if tentativas == 0:
-        print("Você perdeu. A palavra correta era:", palavra_secreta)
+        print("Você perdeu. A palavra correta era:", palavra_secreta) #Se o número de tentativas atingir zero, o jogo exibe uma mensagem informando que o jogador perdeu, juntamente com a palavra correta.
 
+# Verifica se o script está sendo executado como o programa principal
 if __name__ == "__main__":
-    jogar_forca()
+    jogar_forca() #Esta parte verifica se o script está sendo executado como o programa principal e, se sim, chama a função jogar_forca() para iniciar o jogo.
