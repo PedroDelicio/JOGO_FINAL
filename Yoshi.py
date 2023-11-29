@@ -1,47 +1,54 @@
-import pygame
+'''
+Dino Game Yoshi Edition
+Josué Machado =)
+2023/11/29
+'''
+# Importa as bibliotecas
+import pygame 
 from pygame.locals import *
 from sys import exit
 import os
-from random import randrange, choice
+from random import randrange, choice 
 
 pygame.init()
 pygame.mixer.init()
 
+# Checa os diretórios do usuário para uso de imagens e sons
 diretorio_principal = os.path.dirname(__file__)
 diretorio_imagens = os.path.join(diretorio_principal, 'imagens')
 diretorio_sons = os.path.join(diretorio_principal, 'sons')
-
+# Define a proporção da tela
 LARGURA = 640
 ALTURA = 480
-    
+    # Define cor do fundo
 FUNDO = (245,222,179)
-
+# Proporção da tela
 tela = pygame.display.set_mode((LARGURA, ALTURA))
-
+# Legenda "Dino Game Yoshi Edition"
 pygame.display.set_caption('Dino Game Yoshi Edition')
-
+# pega os sprites devido ao arquivo do diretório
 sprite_sheet = pygame.image.load(os.path.join(diretorio_imagens, 'spritesheet.png')).convert_alpha()
-
+# Arruma os sons de colisão e pontuação
 som_colisao = pygame.mixer.Sound(os.path.join(diretorio_sons, 'yoshiHitByEnemy.wav'))
 som_colisao.set_volume(1)
 
 som_pontuacao = pygame.mixer.Sound(os.path.join(diretorio_sons, '1Up.wav'))
 som_pontuacao.set_volume(1)
-
+# Colisão
 colidiu = False
-
+# Escolhe o obstáculo aleatoriamente
 escolha_obstaculo = choice([0, 1])
-
+# Pontos =)
 pontos = 0
-
+# aumenta a velocidade do jogo ao decorrer
 velocidade_jogo = 10
-
+# DEfine tamanho cor da mensagem
 def exibe_mensagem(msg, tamanho, cor):
     fonte = pygame.font.SysFont('comicsansms', tamanho, True, False)
     mensagem = f'{msg}' 
     texto_formatado = fonte.render(mensagem, True, cor)
     return texto_formatado
-
+# Recomeça o jogo ao colidir com obstáculos
 def reiniciar_jogo():
     global pontos, velocidade_jogo, colidiu, escolha_obstaculo
     pontos = 0
@@ -52,13 +59,14 @@ def reiniciar_jogo():
     dino_voador.rect.x = LARGURA
     cacto.rect.x = LARGURA
     escolha_obstaculo = choice([0, 1])
-
+# Sprites do Dino
 class Dino(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.som_pulo = pygame.mixer.Sound(os.path.join(diretorio_sons, 'jump.mp3'))
         self.som_pulo.set_volume(1)
         self.imagens_dinossauro = []
+        # Cria um loop para o sprite do Yoshi mudar
         for i in range(3):
             img = sprite_sheet.subsurface((i * 32,0), (32,32))
             img = pygame.transform.scale(img, (32*3, 32*3))
